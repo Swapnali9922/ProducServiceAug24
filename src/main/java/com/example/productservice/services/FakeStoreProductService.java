@@ -3,9 +3,12 @@ package com.example.productservice.services;
 import com.example.productservice.dtos.FakeStoreProductDtos;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.http.HttpHeaders;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +53,30 @@ public class FakeStoreProductService implements ProductService {
                 FakeStoreProductDtos fakaestoreproductdto=restTemplate.postForObject(url,product,FakeStoreProductDtos.class);
                 return convertFakeStoreProductDtoToProduct(fakaestoreproductdto);
     }
+
+    @Override
+    public void deleteProductById(long id) {
+           String url="https://fakestoreapi.com/products/"+id;
+           RestTemplate restTemplate=new RestTemplate();
+           restTemplate.delete(url);
+    }
+
+//    @Override
+//    public Product updateProduct(long id, Product product) {
+//        RestTemplate resttemplate=new RestTemplate();
+//        String url="https://fakestoreapi.com/products/"+id;
+//        FakeStoreProductDtos fro=new FakeStoreProductDtos();
+//        fro.setTitle(product.getTitle());
+//        fro.setDescription(product.getDescription());
+//        fro.setPrice(product.getPrice());
+//        fro.setCategory(product.getCategory());
+//        fro.setPrice(product.getPrice());
+//
+//
+//        resttemplate.put(url,fro);
+//        FakeStoreProductDtos fakeStoreProductDtos=resttemplate.getForObject(url, FakeStoreProductDtos.class);
+//        return convertFakeStoreProductDtoToProduct(fakeStoreProductDtos);
+//    }
 
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDtos dto){
         Product product=new Product();

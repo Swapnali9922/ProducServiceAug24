@@ -42,5 +42,19 @@ public ResponseEntity<List<Product>> getAllProducts(){
              return ResponseEntity.status(HttpStatus.CREATED).body(pro);
 
     }
+    //update a product
+//    @PutMapping("/products/{id}")
+//    public ResponseEntity<Product> updateProduct(@PathVariable("id") long id,@RequestBody Product product)
+//    {
+//        Product prod=productService.updateProduct(id,product);
+//        return new ResponseEntity<>(prod,HttpStatusCode.valueOf(200));
+//    }
+
+    //delete a product
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<String> deleteproduct(@PathVariable("id") long id){
+           productService.deleteProductById(id);
+           return new ResponseEntity<>("Product deleted",HttpStatus.OK);
+    }
 
 }
