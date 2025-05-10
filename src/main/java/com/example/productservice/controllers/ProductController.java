@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,7 @@ public class ProductController {
                    //Get //products/id
     @Autowired
     private ProductService productService;
+    //get product by given id
  @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") long Productid ) throws ProductNotFoundException {
 //     if(Productid <1 || Productid>20)
@@ -30,10 +28,19 @@ public class ProductController {
 
  }
 
+ //Get all products
  @GetMapping("/products")
 public ResponseEntity<List<Product>> getAllProducts(){
      List<Product> products=productService.getAllProducts();
      return new ResponseEntity<>(products,HttpStatusCode.valueOf(200));
 }
+
+//create a new product
+    @PostMapping("/products")
+    public ResponseEntity<Product> createNewProduct(@RequestBody Product product){
+             Product pro= productService.createNewProduct(product);
+             return ResponseEntity.status(HttpStatus.CREATED).body(pro);
+
+    }
 
 }

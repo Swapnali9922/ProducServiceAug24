@@ -43,13 +43,22 @@ public class FakeStoreProductService implements ProductService {
        return products;
     }
 
+    @Override
+    public Product createNewProduct(Product product) {
+                RestTemplate restTemplate=new RestTemplate();
+                String url="https://fakestoreapi.com/products";
+                FakeStoreProductDtos fakaestoreproductdto=restTemplate.postForObject(url,product,FakeStoreProductDtos.class);
+                return convertFakeStoreProductDtoToProduct(fakaestoreproductdto);
+    }
+
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDtos dto){
         Product product=new Product();
-        product.setName(dto.getTitle());
+        product.setId(dto.getId());
+        product.setTitle(dto.getTitle());
         product.setPrice(dto.getPrice());
         product.setDescription(dto.getDescription());
         product.setCategory(dto.getCategory());
-        product.setImage(product.getImage());
+        product.setImage(dto.getImage());
         return product;
     }
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductService {
     public Product getProductById(long id) throws ProductNotFoundException;
     public List<Product> getAllProducts();
+    public Product createNewProduct(Product product);
 }
