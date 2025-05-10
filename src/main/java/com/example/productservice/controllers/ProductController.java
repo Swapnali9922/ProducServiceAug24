@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -28,9 +30,10 @@ public class ProductController {
 
  }
 
- @ExceptionHandler(ProductNotFoundException.class)
- public ResponseEntity<String> getProductNotFoundexception(ProductNotFoundException e){
-       return new ResponseEntity<>(e.getMessage(),HttpStatusCode.valueOf(400));
- }
+ @GetMapping("/products")
+public ResponseEntity<List<Product>> getAllProducts(){
+     List<Product> products=productService.getAllProducts();
+     return new ResponseEntity<>(products,HttpStatusCode.valueOf(200));
+}
 
 }
